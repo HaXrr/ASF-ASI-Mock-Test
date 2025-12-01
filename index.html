@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASF ASI/CorPORAL Mock Test Practice --Hazrr</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <style></style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-shield-alt"></i> ASF ASI/CorPORAL Mock Test Practice</h1>
+            <p class="tagline">Practice with custom question sets and track your performance</p>
+        </header>
+
+        <div class="app-container">
+            <!-- Input Section -->
+            <div class="input-section active" id="inputSection">
+                <h2>Enter Your Questions (JSON Format)</h2>
+                <p>Paste your 100 questions in JSON format below. Each question should have a question text, options,
+                    and correct answer.</p>
+
+                <div class="json-input-container">
+                    <textarea id="jsonInput" placeholder='Paste your JSON here... Example format:
+[
+  {
+    "question": "What is the capital of Pakistan?",
+    "options": ["Karachi", "Lahore", "Islamabad", "Peshawar"],
+    "answer": "Islamabad"
+  },
+  {
+    "question": "ASF stands for?",
+    "options": ["Airport Security Force", "Air Safety Force", "Aviation Security Force", "Airport Safety Force"],
+    "answer": "Airport Security Force"
+  }
+]'></textarea>
+
+                    <div class="progress-bar">
+                        <div class="progress" id="jsonProgress"></div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-primary" id="loadQuestionsBtn">
+                            <i class="fas fa-play-circle"></i> Start Test with These Questions
+                        </button>
+                        <button class="btn-secondary" id="loadSampleBtn">
+                            <i class="fas fa-file-alt"></i> Load Sample Questions
+                        </button>
+                        <button class="btn-secondary" id="clearBtn">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sample-json-container">
+                    <div class="sample-header">
+                        <h3>Sample JSON Format</h3>
+                        <button class="btn-secondary" id="viewSampleBtn">
+                            <i class="fas fa-eye"></i> View Sample
+                        </button>
+                    </div>
+                    <div class="sample-json" id="sampleJson" style="display: none;">
+                        [
+                        {
+                        "question": "What is the primary responsibility of ASF?",
+                        "options": [
+                        "Passenger facilitation",
+                        "Aviation security",
+                        "Customs enforcement",
+                        "Immigration control"
+                        ],
+                        "answer": "Aviation security"
+                        },
+                        {
+                        "question": "What does ASI stand for in ASF?",
+                        "options": [
+                        "Assistant Sub-Inspector",
+                        "Airport Security Inspector",
+                        "Aviation Security Inspector",
+                        "Assistant Security Inspector"
+                        ],
+                        "answer": "Assistant Sub-Inspector"
+                        },
+                        {
+                        "question": "Which act governs the ASF in Pakistan?",
+                        "options": [
+                        "Airport Security Act 1975",
+                        "ASF Act 1975",
+                        "Aviation Security Act 1975",
+                        "Airport Security Force Act 1975"
+                        ],
+                        "answer": "Airport Security Force Act 1975"
+                        },
+                        {
+                        "question": "What is the rank structure of ASF?",
+                        "options": [
+                        "Similar to Police",
+                        "Similar to Army",
+                        "Similar to Airport Authority",
+                        "Unique to ASF"
+                        ],
+                        "answer": "Similar to Police"
+                        }
+                        ]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Section -->
+            <div class="test-section" id="testSection">
+                <div class="test-info">
+                    <div>Question: <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></div>
+                    <div>Time: <span id="timer">00:00</span></div>
+                    <div>Correct: <span id="correctCount">0</span></div>
+                </div>
+
+                <h2>Test Questions</h2>
+
+                <div class="question-container">
+                    <div class="question-number">Question <span id="questionNumber">1</span>:</div>
+                    <div class="question-text" id="questionText">Loading question...</div>
+
+                    <div class="options-container" id="optionsContainer">
+                        <!-- Options will be inserted here by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn-secondary" id="prevBtn">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button class="btn-primary" id="nextBtn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn-success" id="submitTestBtn">
+                        <i class="fas fa-check-circle"></i> Submit Test
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection">
+                <h2>Test Results</h2>
+
+                <div class="results-summary">
+                    <div class="score-circle">
+                        <div class="score-inner" id="scorePercentage">0%</div>
+                    </div>
+                    <div class="score-text" id="scoreText">Your Score</div>
+                    <p>You have completed the mock test. Review your results below.</p>
+                </div>
+
+                <div class="results-details">
+                    <div class="result-card correct">
+                        <h3>Correct Answers</h3>
+                        <div class="result-value" id="correctAnswers">0</div>
+                        <p>Questions answered correctly</p>
+                    </div>
+
+                    <div class="result-card wrong">
+                        <h3>Wrong Answers</h3>
+                        <div class="result-value" id="wrongAnswers">0</div>
+                        <p>Questions answered incorrectly</p>
+                    </div>
+
+                    <div class="result-card percentage">
+                        <h3>Percentage</h3>
+                        <div class="result-value" id="resultPercentage">0%</div>
+                        <p>Overall performance</p>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" id="reviewTestBtn">
+                        <i class="fas fa-redo"></i> Review Test
+                    </button>
+                    <button class="btn-secondary" id="newTestBtn">
+                        <i class="fas fa-plus-circle"></i> Start New Test
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>ASF ASI/CorPORAL Mock Test Practice Tool | Designed for exam preparation</p>
+            <p>Made with Love by Hazrr <a href="https://github.com/HaXrr">github</a></p>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
